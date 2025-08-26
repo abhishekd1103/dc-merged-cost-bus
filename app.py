@@ -351,28 +351,29 @@ with tab1:
         input_type = st.radio(
             "Starting Point:",
             ["IT Load (MW)", "Total Facility Load (MW)"],
-            help="Choose whether to start from critical IT load or total facility load"
+            help="Choose whether to start from critical IT load or total facility load",
+            key="bus_input_type"
         )
         
         # Main load input
         if input_type == "IT Load (MW)":
-            it_mw = st.number_input("IT Load (MW)", min_value=0.1, max_value=100.0, value=5.0, step=0.1)
+            it_mw = st.number_input("IT Load (MW)", min_value=0.1, max_value=100.0, value=5.0, step=0.1, key="bus_it_load")
             total_mw = None
         else:
-            total_mw = st.number_input("Total Facility Load (MW)", min_value=0.2, max_value=200.0, value=7.8, step=0.1)
+            total_mw = st.number_input("Total Facility Load (MW)", min_value=0.2, max_value=200.0, value=7.8, step=0.1, key="bus_total_load")
             it_mw = None
         
         # PUE input
-        pue = st.slider("PUE (Power Usage Effectiveness)", min_value=1.1, max_value=2.0, value=1.56, step=0.01)
+        pue = st.slider("PUE (Power Usage Effectiveness)", min_value=1.1, max_value=2.0, value=1.56, step=0.01, key="bus_pue")
         
         # Data center type
-        dc_type = st.selectbox("Data Center Type", ["Enterprise/Colo", "Hyperscale", "AI/HPC"])
+        dc_type = st.selectbox("Data Center Type", ["Enterprise/Colo", "Hyperscale", "AI/HPC"], key="bus_dc_type")
         
         # Redundancy tier
-        redundancy = st.selectbox("Redundancy Tier", ["N (Base)", "Tier III (N+1)", "Tier IV (2N)"], index=1)
+        redundancy = st.selectbox("Redundancy Tier", ["N (Base)", "Tier III (N+1)", "Tier IV (2N)"], index=1, key="bus_redundancy")
         
         # Non-IT load split
-        mech_fraction = st.slider("Mechanical (Cooling) Fraction", min_value=0.5, max_value=0.9, value=0.7, step=0.01)
+        mech_fraction = st.slider("Mechanical (Cooling) Fraction", min_value=0.5, max_value=0.9, value=0.7, step=0.01, key="bus_mech_fraction")
     
     with col2:
         st.markdown("""
@@ -381,11 +382,11 @@ with tab1:
         </div>
         """, unsafe_allow_html=True)
         
-        ups_lineup = st.slider("UPS Lineup (MW)", 0.5, 2.0, 1.5, 0.1)
-        transformer_mva = st.slider("Transformer MV→LV (MVA)", 1.0, 5.0, 3.0, 0.1)
-        lv_bus_mw = st.slider("LV Switchboard Bus Section (MW)", 2.0, 4.5, 3.0, 0.1)
-        pdu_mva = st.slider("PDU Capacity (MVA)", 0.2, 0.6, 0.3, 0.05)
-        mv_base = st.slider("MV Buses Base (per system)", 1, 4, 2, 1)
+        ups_lineup = st.slider("UPS Lineup (MW)", 0.5, 2.0, 1.5, 0.1, key="bus_ups")
+        transformer_mva = st.slider("Transformer MV→LV (MVA)", 1.0, 5.0, 3.0, 0.1, key="bus_transformer")
+        lv_bus_mw = st.slider("LV Switchboard Bus Section (MW)", 2.0, 4.5, 3.0, 0.1, key="bus_lv_bus")
+        pdu_mva = st.slider("PDU Capacity (MVA)", 0.2, 0.6, 0.3, 0.05, key="bus_pdu")
+        mv_base = st.slider("MV Buses Base (per system)", 1, 4, 2, 1, key="bus_mv_base")
         
         st.markdown("""
         <div class="section-header">
@@ -393,11 +394,11 @@ with tab1:
         </div>
         """, unsafe_allow_html=True)
         
-        voltage_levels = st.selectbox("Voltage Levels", [2, 3], index=0)
-        backup_gens = st.slider("Backup Generators", 0, 10, 0, 1)
-        expansion_factor = st.slider("Future Expansion Factor", 1.0, 1.5, 1.0, 0.05)
-        power_factor = st.slider("Power Factor", 0.9, 1.0, 0.95, 0.01)
-        bus_calibration_factor = st.slider("Bus Count Calibration Factor", 0.5, 2.0, 1.0, 0.1)
+        voltage_levels = st.selectbox("Voltage Levels", [2, 3], index=0, key="bus_voltage_levels")
+        backup_gens = st.slider("Backup Generators", 0, 10, 0, 1, key="bus_backup_gens")
+        expansion_factor = st.slider("Future Expansion Factor", 1.0, 1.5, 1.0, 0.05, key="bus_expansion")
+        power_factor = st.slider("Power Factor", 0.9, 1.0, 0.95, 0.01, key="bus_power_factor")
+        bus_calibration_factor = st.slider("Bus Count Calibration Factor", 0.5, 2.0, 1.0, 0.1, key="bus_calibration_factor")
     
     # Bus Count Calculations
     def calculate_bus_counts():
@@ -576,10 +577,10 @@ with tab2:
         
         with cal_col1:
             st.markdown("#### Hourly Rates (₹) - Updated Ranges")
-            # FIXED: Updated salary ranges as requested
+            # FIXED: Updated default values to be within the new ranges
             senior_rate = st.number_input("Senior Engineer", min_value=500, max_value=4000, value=1200, step=50, key="cal_senior_rate")
             mid_rate = st.number_input("Mid-level Engineer", min_value=500, max_value=2500, value=650, step=25, key="cal_mid_rate")
-            junior_rate = st.number_input("Junior Engineer", min_value=500, max_value=1500, value=350, step=25, key="cal_junior_rate")
+            junior_rate = st.number_input("Junior Engineer", min_value=500, max_value=1500, value=500, step=25, key="cal_junior_rate")  # FIXED: Changed from 350 to 500
         
         with cal_col2:
             st.markdown("#### Study Complexity Factors")
