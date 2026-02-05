@@ -1020,31 +1020,31 @@ junior_allocation = st.session_state.work_allocation['junior'] / 100
 studies_data = {
     'load_flow': {
         'name': 'Load Flow Study',
-        'base_hours_per_bus': 0.5,
+        'base_hours_per_bus': 0.25,
         'factor': load_flow_factor,
         'report_cost': load_flow_report_cost
     },
     'short_circuit': {
         'name': 'Short Circuit Study',
-        'base_hours_per_bus': 0.6,
+        'base_hours_per_bus': 0.4,
         'factor': short_circuit_factor,
         'report_cost': short_circuit_report_cost
     },
     'pdc': {
         'name': 'Protective Device Coordination',
-        'base_hours_per_bus': 0.9,
+        'base_hours_per_bus': 0.7,
         'factor': pdc_factor,
         'report_cost': pdc_report_cost
     },
     'arc_flash': {
         'name': 'Arc Flash Study',
-        'base_hours_per_bus': 0.7,
+        'base_hours_per_bus': 0.6,
         'factor': arc_flash_factor,
         'report_cost': arc_flash_report_cost
     },
     'harmonics': {
         'name': 'Harmonics Study',
-        'base_hours_per_bus': 0.6,
+        'base_hours_per_bus': 0.65,
         'factor': harmonics_factor,
         'report_cost': harmonics_report_cost
     },
@@ -1427,3 +1427,4 @@ st.markdown(f"""
     </p>
 </div>
 """, unsafe_allow_html=True)
+
